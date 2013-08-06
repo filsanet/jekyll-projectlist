@@ -49,7 +49,7 @@ module Jekyll
       entries  = Dir.chdir(base) { site.filter_entries(Dir['**/*']) }
 
       # Reverse chronological order
-      entries = entries.reverse
+      # entries = entries.reverse
       entries.each do |f|
           project = Project.new(site, site.source, dir, f)
           @@projects << project.projectdata if project.publish?
@@ -80,7 +80,7 @@ module Jekyll
       super
     end
 
-    def load_teplate(file, context)
+    def load_template(file, context)
       includes_dir = File.join(context.registers[:site].source, '_includes')
 
       if File.symlink?(includes_dir)
@@ -104,7 +104,7 @@ module Jekyll
 
     def render(context)
       output = super
-      template = load_teplate(@template_file, context)
+      template = load_template(@template_file, context)
 
       Liquid::Template.parse(template).render('projects' => @projects).gsub(/\t/, '')
     end
